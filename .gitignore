@@ -1,0 +1,8 @@
+/**
+!.gitignore
+!/.config/
+!/Documents/
+/Documents/**
+!/Documents/PowerShell/
+/Documents/PowerShell/**
+!/Documents/PowerShell/Microsoft.PowerShell_profile.ps1
