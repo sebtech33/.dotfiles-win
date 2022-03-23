@@ -2,7 +2,7 @@
 
 ## Everything is VIP!
 
-Here I will store all files that I use to customize my windows and linux experience
+Here I will store all files that I use to customize my windows experience.
 
 This will grow over time.
 
