@@ -7,3 +7,4 @@
 !/Documents/PowerShell/
 /Documents/PowerShell/**
 !/Documents/PowerShell/Microsoft.PowerShell_profile.ps1
+!/Documents/PowerShell/Get-StarshipConfig.psm1
