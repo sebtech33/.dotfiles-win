@@ -1,18 +1,21 @@
 # Added to get rid of [WARN] messages on startup
 command_timeout = 1000
 
-# Inserts a blank line between shell prompts
-add_newline = true
-
 # Change the default prompt format
 format = """\
 [╭╴](238)$env_var\
 $all[╰─](238)$character"""
-# 
+
 # Change the default prompt characters
 [character]
 success_symbol = "[](238)"
 error_symbol = "[](238)"
+
+# Shows the OS icon and Username from powershell $PROFILE
+[env_var.STARSHIP_DISTRO]
+format = '[$env_value](bold white)'
+variable = "STARSHIP_DISTRO"
+disabled = false
 
 # Show the username
 [username]
@@ -21,11 +24,6 @@ style_root = "black bold"
 format = "[$user]($style) "
 disabled = true
 show_always = false
-
-[env_var.STARSHIP_DISTRO]
-format = '[$env_value](bold white)'
-variable = "STARSHIP_DISTRO"
-disabled = false
 
 [python]
 format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
