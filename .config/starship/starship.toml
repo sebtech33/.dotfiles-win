@@ -13,17 +13,36 @@ error_symbol = "[](238)"
 
 # Shows the OS icon and Username from powershell $PROFILE
 [env_var.STARSHIP_DISTRO]
+disabled = false
 format = '[$env_value](bold white)'
 variable = "STARSHIP_DISTRO"
-disabled = false
 
 # Show the username
 [username]
+disabled = true
 style_user = "white bold"
 style_root = "black bold"
 format = "[$user]($style) "
-disabled = true
 show_always = false
+
+# Directory config
+[directory]
+disabled = false
+truncation_length = 4
+truncate_to_repo = true
+#format = ''
+#style = ''
+#read_only = ''
+#read_only_style = ''
+truncation_symbol = '../'
+#repo_root_style = ''
+#repo_root_format = ''
+#home_symbol = ''
+#use_os_path_sep = ''
+# Advanced
+#substitutions = ''
+#fish_style_pwd_dir_length = ''
+#use_logical_path = ''
 
 [python]
 format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
