@@ -1,15 +1,17 @@
 #!/usr/bin/env pwsh, powershell
 
-# Requirements:
+#-----------------------[Requirements]-----------------------#
+
 # - PowerShell Core (dahh) 	- Script made with version 7.2.2
 # - Starship				- https://www.starship.rs/
 # - NerdFont				- https://www.nerdfonts.com/
 
-# Static name for custom Name.
-# Leave empty ($name = "") if you either want:
-# - Starship config to handle the username # TODO Add username "plugin" to Starship conf - Disabled by default
+#-----------------------[SETTINGS]-----------------------#
+
+# Custom Name:
+# - Starship config to handle the username (Disabled by default)
 # - No username showing in terminal
-$name = 'SebTech33' # Default = ''
+$username = '' # Default = ''
 
 # Debug output
 # Only use for debugging code
@@ -17,22 +19,20 @@ $name = 'SebTech33' # Default = ''
 # Options = '' / $false / $true / "Inquire"
 $debug_output = '' #Default = ''
 
-
-# START OF CODE #
-
-
-# Online Strings
-#$starship = "https://raw.githubusercontent.com/sebtech33/Windows-HOME-files/main/.config/starship/starship.toml"
-
-# Local strings
-# Default: "$HOME\.config\starship.toml"
-$starship_config = "$HOME\.config\starship\starship.toml" # Location for Starship Config
+# Location for Starship Config
+$starship_config = "$HOME\.config\starship\starship.toml" # Default: "$HOME\.config\starship.toml"
 
 
-# FUNCTIONS #
+#-----------------------[START OF CODE]-----------------------#
+
+
+#-----------------------[FUNCTIONS]-----------------------#
 
 function Set-DebugOption() { # Function to set debug option for every script
-	if ( $debug_output ) { # Set DebugPreference to show Debug messages
+	if ([string]::IsNullOrEmpty($debug_output)) {
+		$DebugPreference = 'SilentlyContinue'
+	}
+	elseif ( $debug_output ) { # Set DebugPreference to show Debug messages
 		$DebugPreference = "Continue"
 	}
 	elseif ( [string]$debug_output -eq "Inquire" ) { # Set DebugPreference to stop for every Debug messages
@@ -43,27 +43,20 @@ function Set-DebugOption() { # Function to set debug option for every script
 	}
 }
 
-function Test-StarshipConfig() { # Function to check if a config for Starship is in place
+function Set-StarshipConfig() { # Function to check if a config for Starship is in place
 	$check = Test-Path -Path $starship_config -PathType Leaf
 
-	if ( $check ) {
+	if ( $check ) { # See if Starship config exits
 		Write-Debug "Starship Found"
-		$ENV:STARSHIP_CONFIG = $starship_config
+		return $starship_config
+	}
+	elseif (!$check) { # Config does not exist
+		Import-Module -Name $HOME/Documents/PowerShell/PSStarship.psm1
+		Get-StarshipConfig
+		Remove-Module -Name PSStarship
+		Set-StarshipConfig
 	}
 }
-# else {
-# 	Write-Debug "It works but no starship config file is found"
-# 	$promt = Read-Host -Prompt "Do you want to download your starship config? (y/n)"
-#
-# 	if ( $promt -eq "y" ) {
-# 		Write-Debug "Ok, ill download the config"
-# 		Invoke-WebRequest $starship -OutFile $starship_config
-# 		check_conf
-# 	}
-# 	else {
-# 		Write-Debug "Ok, continuing with default config"
-# 	}
-# }
 
 function Get-OsIcon() { # Function to Check OS type and assign it an icon for the os 
 	if ( $IsWindows ) {
@@ -92,22 +85,22 @@ function Get-OsIcon() { # Function to Check OS type and assign it an icon for th
 	}
 }
 
-function Get-Name() {
-	if ([string]::IsNullOrEmpty($name)) {
+function Get-Name() { # TODO Prompt asking to write a username
+	if ([string]::IsNullOrEmpty($username)) {
 		return ''
 	}
-	elseif ($name) {
-		return $name+' '
+	elseif ($username) {
+		return $username+' '
 	}
 }
 
 
-# MAIN SCRIPT #
+#-----------------------[RUN OPTIONS]-----------------------#
 
 Set-DebugOption
-Test-StarshipConfig
 
 
-# RUN STARSHIP
+#-----------------------[RUN STARSHIP]-----------------------#
+$ENV:STARSHIP_CONFIG = ((Set-StarshipConfig))
 $ENV:STARSHIP_DISTRO = ((Get-OsIcon), (Get-Name))
 Invoke-Expression (&starship init powershell)
