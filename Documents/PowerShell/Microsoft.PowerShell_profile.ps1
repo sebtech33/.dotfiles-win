@@ -11,7 +11,7 @@
 # Custom Name:
 # - Starship config to handle the username (Disabled by default)
 # - No username showing in terminal
-$username = '' # Default = ''
+$username = 'SebTech33' # Default = ''
 
 # Debug output
 # Only use for debugging code
@@ -64,16 +64,16 @@ function Get-OsIcon() { # Function to Check OS type and assign it an icon for th
 		$OSversion = [System.Environment]::OSVersion.Version.Major
 		$OSbuild = [System.Environment]::OSVersion.Version.Build
 
-		if ( $OSversion -eq '10' -or '11' -and $OSbuild -ge 22000 ) { 	# For Windows 11
+		if ( $OSversion -eq '10' -or '11' -and $OSbuild -ge 22000 ) { # For Windows 11
 			return ""
 		}
-		elseif ( $OSversion -eq '10' -and $OSbuild -le 19044) { 		# For Windows 10
+		elseif ( $OSversion -eq '10' -and $OSbuild -le 19044) { # For Windows 10
 			return ""
 		}
-		elseif ($OSversion -eq '8') { 									# For Windows 8
+		elseif ($OSversion -eq '8') { # For Windows 8
 			return ""
 		}
-		elseif ($OSversion -eq '7') {									# For Windows 7
+		elseif ($OSversion -eq '7') { # For Windows 7
 			return ""
 		}
 	}
